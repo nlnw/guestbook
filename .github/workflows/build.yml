@@ -1,0 +1,12 @@
+on: push
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install --frozen-lockfile
+      - run: bun test
+      - run: bun run --cwd contracts build
+      - run: bun run --cwd my-app build
