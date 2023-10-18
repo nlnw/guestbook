@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "my-app"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "deploy": "tsc && vite build && wrangler pages deploy dist --project-name defi-assistant --commit-dirty true -e main"
+  }
+}
