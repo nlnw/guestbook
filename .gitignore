@@ -1,3 +1,4 @@
+.cache/
 .vite/
 /node_modules/
 artifacts/
