@@ -11,6 +11,7 @@
     "deploy": "vite build && wrangler pages deploy --project-name aguestbook dist"
   },
   "dependencies": {
+    "@rainbow-me/rainbowkit": "^1.1.2",
     "@tableland/sdk": "^4.5.3-dev.0",
     "autoprefixer": "^10.4.16",
     "ethers": "^5.7.2",
@@ -19,6 +20,8 @@
     "react-dom": "^18.2.0",
     "react-jazzicon": "^1.0.4",
     "tailwindcss": "^3.3.3",
+    "viem": "^1.16.6",
+    "wagmi": "^1.4.5",
     "wrangler": "^3.14.0"
   },
   "devDependencies": {

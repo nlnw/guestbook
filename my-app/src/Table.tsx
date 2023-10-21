@@ -1,33 +1,49 @@
 import Jazzicon from "react-jazzicon";
 import { TableRow } from "./common";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 function TableControls() {
+  const { address, isConnected } = useAccount();
+
   return (
     <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
       <div></div>
 
       <div>
         <div className="inline-flex gap-x-2">
+          {isConnected && (
+            <a
+              className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+              href="#form"
+            >
+              <svg
+                className="w-3 h-3"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M2.63452 7.50001L13.6345 7.5M8.13452 13V2"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+              Post
+            </a>
+          )}
           <a
             className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
             href="#"
           >
-            <svg
-              className="w-3 h-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-            >
-              <path
-                d="M2.63452 7.50001L13.6345 7.5M8.13452 13V2"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </svg>
-            Post
+            <ConnectButton
+              label="Connect"
+              accountStatus="avatar"
+              chainStatus="icon"
+            />
           </a>
         </div>
       </div>
@@ -84,6 +100,7 @@ function TableHead() {
 }
 
 export default function Table({ messages }: { messages: TableRow[] }) {
+  const { address, isConnected } = useAccount();
   return (
     <>
       <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 l mx-auto">
@@ -189,7 +206,7 @@ export default function Table({ messages }: { messages: TableRow[] }) {
                           viewBox="0 0 16 16"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
                           />
                         </svg>
@@ -210,7 +227,7 @@ export default function Table({ messages }: { messages: TableRow[] }) {
                           viewBox="0 0 16 16"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
                           />
                         </svg>

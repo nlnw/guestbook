@@ -1,44 +1,74 @@
-import tablelandLogo from "./assets/tableland.svg";
-import "./App.css";
-import Table from "./Table";
-import { Database } from "@tableland/sdk";
+import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
+import "@rainbow-me/rainbowkit/styles.css";
 import { useEffect, useState } from "react";
-import { TABLELAND_TABLE, TableRow } from "./common";
+import { mantleTestnet, polygonMumbai, scrollSepolia } from "viem/chains";
+import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import "./App.css";
+import Form from "./Form";
+import Table from "./Table";
+import tablelandLogo from "./assets/tableland.svg";
+import { TableRow, queryTable } from "./common";
 
 function App() {
   const [messages, setMessages] = useState<TableRow[]>([]);
+  const [refreshVar, setRefreshVar] = useState(false);
+
+  const refresh = () => {
+    setRefreshVar((v) => !v);
+  };
 
   useEffect(() => {
-    const dbRead = new Database();
     const fetchData = async () => {
-      const { results } = await dbRead
-        .prepare(`SELECT * FROM ${TABLELAND_TABLE};`)
-        .all();
-      setMessages(results as TableRow[]);
+      setMessages(await queryTable());
     };
     fetchData().catch(console.error);
-  }, []);
+  }, [refreshVar]);
+
+  const { chains, publicClient } = configureChains(
+    [polygonMumbai, scrollSepolia, mantleTestnet],
+    [
+      alchemyProvider({ apiKey: import.meta.env.VITE_ALCHEMY_ID || "" }),
+      publicProvider(),
+    ]
+  );
+
+  const { connectors } = getDefaultWallets({
+    appName: "Guestbook",
+    projectId: "YOUR_PROJECT_ID",
+    chains,
+  });
+
+  const wagmiConfig = createConfig({
+    autoConnect: true,
+    connectors,
+    publicClient,
+  });
 
   return (
-    <>
-      <div className="max-w-2xl mx-auto text-center mb-10">
-        <h2 className="text-3xl leading-tight font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-700 text-transparent">
-          X-Chain Guestbook
-        </h2>
-        <p className="mt-2 lg:text-lg text-gray-800 dark:text-gray-200">
-          Built with{" "}
-          <img
-            style={{ display: "inline-block" }}
-            alt="Tableland"
-            width="150"
-            src={tablelandLogo}
-          />
-        </p>
-      </div>
-      <Table messages={messages} />
-      <div className="mb-10"></div>
-      <div className="bg-gradient-to-r from-transparent via-violet-400 to-transparent h-px"></div>
-    </>
+    <WagmiConfig config={wagmiConfig}>
+      <RainbowKitProvider chains={chains}>
+        <div className="max-w-2xl mx-auto text-center mb-10">
+          <h2 className="text-3xl leading-tight font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-700 text-transparent">
+            X-Chain Guestbook
+          </h2>
+          <p className="mt-2 lg:text-lg text-gray-800 dark:text-gray-200">
+            Built with{" "}
+            <img
+              style={{ display: "inline-block" }}
+              alt="Tableland"
+              width="150"
+              src={tablelandLogo}
+            />
+          </p>
+        </div>
+        <Table messages={messages} />
+        <div className="mb-10"></div>
+        <div className="bg-gradient-to-r from-transparent via-violet-400 to-transparent h-px"></div>
+        <Form refresh={refresh} />
+      </RainbowKitProvider>
+    </WagmiConfig>
   );
 }
 
