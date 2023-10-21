@@ -7,22 +7,24 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler pages deploy --project-name aguestbook dist"
   },
   "dependencies": {
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "wrangler": "^3.14.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.29",
-    "@types/react-dom": "^18.2.13",
+    "@types/react": "^18.2.31",
+    "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
     "@vitejs/plugin-react-swc": "^3.4.0",
-    "eslint": "^8.51.0",
+    "eslint": "^8.52.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.2.2",

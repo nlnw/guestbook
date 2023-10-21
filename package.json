@@ -3,5 +3,11 @@
   "workspaces": [
     "contracts",
     "my-app"
-  ]
+  ],
+  "scripts": {
+    "deploy": "bun run --cwd my-app vite build && wrangler pages deploy --project-name aguestbook my-app/dist"
+  },
+  "devDependencies": {
+    "wrangler": "^3.14.0"
+  }
 }
