@@ -12,13 +12,12 @@ export default function Form({ refresh }: { refresh: () => void }) {
 
   const handleForm = async () => {
     const db = new Database();
-    const row = await queryTableTop();
 
     const { meta: insert } = await db
       .prepare(
-        `INSERT INTO ${TABLELAND_TABLE} (id, sender, message) VALUES (?, ?, ?);`
+        `INSERT INTO ${TABLELAND_TABLE} (sender, message) VALUES (?, ?);`
       )
-      .bind(row.id + 1, address, message)
+      .bind(address, message)
       .run();
 
     await insert.txn?.wait();

@@ -1,10 +1,10 @@
-import Jazzicon from "react-jazzicon";
 import { TableRow } from "./common";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
+import BlockiesSvg from "blockies-react-svg";
 
 function TableControls() {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
 
   return (
     <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
@@ -59,6 +59,14 @@ function TableHead() {
           <div className="flex items-center gap-x-2">
             <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
               ID
+            </span>
+          </div>
+        </th>
+
+        <th scope="col" className="px-6 py-3 text-left">
+          <div className="flex items-center gap-x-2">
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+              Chain
             </span>
           </div>
         </th>
@@ -124,11 +132,18 @@ export default function Table({ messages }: { messages: TableRow[] }) {
 
                         <td className="h-px w-px whitespace-nowrap">
                           <div className="px-6 py-3">
+                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                              <a href="https://tableland.xyz" target="_blank">
+                                <img src="/tableland_ico.png" />
+                              </a>
+                            </span>
+                          </div>
+                        </td>
+
+                        <td className="h-px w-px whitespace-nowrap">
+                          <div className="px-6 py-3">
                             <div className="flex items-center gap-x-2">
-                              <Jazzicon
-                                diameter={24}
-                                seed={parseInt(message.sender, 16)}
-                              />
+                              <BlockiesSvg address={message.sender} scale={4} />
                               <div className="grow">
                                 <span className="text-sm text-gray-600 dark:text-gray-400">
                                   <a
