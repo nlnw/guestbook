@@ -22,3 +22,4 @@ Multi-chain guestbook that supports peer-to-peer encrypted messages. Built for E
 ### Mantle
 
 - Contract: https://explorer.testnet.mantle.xyz/address/0xf98CBd9bDc0dd1441DA3faE0E1Eb66D6F966e52d/contracts#address-tabs
+- Tweet: https://twitter.com/zknlnw/status/1715917304905523252
