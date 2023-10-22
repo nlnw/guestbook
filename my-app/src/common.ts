@@ -1,6 +1,5 @@
 import { Database } from "@tableland/sdk";
 import { Chain, createPublicClient, getContract, http } from "viem";
-import { scrollSepolia } from "viem/chains";
 import { GUESTBOOK_ABI } from "./commonAbi";
 
 export const TABLELAND_TABLE = "guestbook_80001_8065";
@@ -49,7 +48,7 @@ export async function writeTableMessage(address: string, message: string) {
 }
 
 export async function queryEVMTestnetMessages(
-  address: string,
+  address: `0x${string}`,
   chain: Chain
 ): Promise<TableRowWithChain[]> {
   const publicClient = createPublicClient({
@@ -58,7 +57,7 @@ export async function queryEVMTestnetMessages(
     transport: http(),
   });
   const contract = getContract({
-    address: SCROLL_GUESTBOOK_ADDRESS,
+    address: address,
     abi: GUESTBOOK_ABI,
     publicClient,
   });

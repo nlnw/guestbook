@@ -4,11 +4,9 @@ import {
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
-  useWaitForTransaction,
 } from "wagmi";
 import {
   writeTableMessage,
-  writeContractMessage,
   SCROLL_GUESTBOOK_ADDRESS,
   MANTLE_GUESTBOOK_ADDRESS,
 } from "./common";
@@ -48,10 +46,7 @@ export default function Form({ refresh }: { refresh: () => void }) {
       chain?.name.startsWith("Scroll") || chain?.name.startsWith("Mantle"),
   });
 
-  const { data, write } = useContractWrite(config);
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  });
+  const { write } = useContractWrite(config);
 
   if (!isConnected) {
     return <></>;
