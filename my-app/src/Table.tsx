@@ -1,4 +1,4 @@
-import { TableRow } from "./common";
+import { TableRowWithChain } from "./common";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import BlockiesSvg from "blockies-react-svg";
@@ -107,7 +107,7 @@ function TableHead() {
   );
 }
 
-export default function Table({ messages }: { messages: TableRow[] }) {
+export default function Table({ messages }: { messages: TableRowWithChain[] }) {
   return (
     <>
       <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 l mx-auto">
@@ -120,7 +120,7 @@ export default function Table({ messages }: { messages: TableRow[] }) {
                   <TableHead />
                   <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {messages.map((message) => (
-                      <tr key={message.id}>
+                      <tr key={message.chain + "-" + message.id}>
                         <td className="h-px w-px whitespace-nowrap">
                           <div className="px-6 py-3">
                             <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -132,9 +132,16 @@ export default function Table({ messages }: { messages: TableRow[] }) {
                         <td className="h-px w-px whitespace-nowrap">
                           <div className="px-6 py-3">
                             <span className="text-sm text-gray-600 dark:text-gray-400">
-                              <a href="https://tableland.xyz" target="_blank">
-                                <img src="/tableland_ico.png" />
-                              </a>
+                              {message.chain == "tableland" && (
+                                <a href="https://tableland.xyz" target="_blank">
+                                  <img src="/tableland_ico.png" />
+                                </a>
+                              )}
+                              {message.chain == "scroll" && (
+                                <a href="https://scroll.io/" target="_blank">
+                                  <img src="/scroll.ico" />
+                                </a>
+                              )}
                             </span>
                           </div>
                         </td>

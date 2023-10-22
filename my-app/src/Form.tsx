@@ -1,27 +1,69 @@
-import { Database } from "@tableland/sdk";
-import { useState } from "react";
-import { useAccount } from "wagmi";
-import { TABLELAND_TABLE } from "./common";
+import { useEffect, useState } from "react";
+import {
+  useAccount,
+  useContractWrite,
+  useNetwork,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+import {
+  writeTableMessage,
+  writeContractMessage,
+  SCROLL_GUESTBOOK_ADDRESS,
+  MANTLE_GUESTBOOK_ADDRESS,
+} from "./common";
+import { GUESTBOOK_ABI } from "./commonAbi";
+
+export function useDebounce<T>(value: T, delay?: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay || 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 export default function Form({ refresh }: { refresh: () => void }) {
   const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
   const [message, setMessage] = useState<string>("");
+
+  // const debouncedMessage = useDebounce(message, 1000);
+
+  const { config } = usePrepareContractWrite({
+    address: chain?.name.startsWith("Scroll")
+      ? SCROLL_GUESTBOOK_ADDRESS
+      : chain?.name.startsWith("Mantle")
+      ? MANTLE_GUESTBOOK_ADDRESS
+      : SCROLL_GUESTBOOK_ADDRESS,
+    abi: GUESTBOOK_ABI,
+    functionName: "post",
+    args: [message],
+    enabled:
+      chain?.name.startsWith("Scroll") || chain?.name.startsWith("Mantle"),
+  });
+
+  const { data, write } = useContractWrite(config);
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
   if (!isConnected) {
     return <></>;
   }
 
-  const handleForm = async () => {
-    const db = new Database();
-
-    const { meta: insert } = await db
-      .prepare(
-        `INSERT INTO ${TABLELAND_TABLE} (sender, message) VALUES (?, ?);`
-      )
-      .bind(address, message)
-      .run();
-
-    await insert.txn?.wait();
-    alert("Inserted!");
+  const handleForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (chain?.name.startsWith("Polygon")) {
+      await writeTableMessage(address as string, message);
+    } else {
+      await write?.();
+    }
     refresh();
   };
 

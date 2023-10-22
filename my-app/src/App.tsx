@@ -9,10 +9,15 @@ import "./App.css";
 import Form from "./Form";
 import Table from "./Table";
 import tablelandLogo from "./assets/tableland.svg";
-import { TableRow, queryTable } from "./common";
+import {
+  TableRow,
+  TableRowWithChain,
+  queryScrollTestnetMessages,
+  queryTable,
+} from "./common";
 
 function App() {
-  const [messages, setMessages] = useState<TableRow[]>([]);
+  const [messages, setMessages] = useState<TableRowWithChain[]>([]);
   const [refreshVar, setRefreshVar] = useState(false);
 
   const refresh = () => {
@@ -21,7 +26,15 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setMessages(await queryTable());
+      const scrollMessages = await queryScrollTestnetMessages();
+      const tableLandMessages = (await queryTable()).map((row: TableRow) => ({
+        ...row,
+        chain: "tableland",
+      }));
+
+      setMessages(
+        scrollMessages.concat(tableLandMessages).sort((a, b) => b.id - a.id)
+      );
     };
     fetchData().catch(console.error);
   }, [refreshVar]);
