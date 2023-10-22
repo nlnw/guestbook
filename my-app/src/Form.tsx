@@ -1,7 +1,7 @@
 import { Database } from "@tableland/sdk";
 import { useState } from "react";
 import { useAccount } from "wagmi";
-import { TABLELAND_TABLE, queryTableTop } from "./common";
+import { TABLELAND_TABLE } from "./common";
 
 export default function Form({ refresh }: { refresh: () => void }) {
   const { address, isConnected } = useAccount();

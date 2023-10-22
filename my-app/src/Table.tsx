@@ -108,7 +108,6 @@ function TableHead() {
 }
 
 export default function Table({ messages }: { messages: TableRow[] }) {
-  const { address, isConnected } = useAccount();
   return (
     <>
       <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 l mx-auto">

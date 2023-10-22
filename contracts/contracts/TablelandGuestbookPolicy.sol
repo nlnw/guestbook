@@ -43,7 +43,7 @@ interface ITablelandController {
 
 contract GuestbookPolicy {
     function getPolicy(
-        address sender
+        address
     ) public payable returns (ITablelandController.Policy memory) {
         return
             ITablelandController.Policy({
