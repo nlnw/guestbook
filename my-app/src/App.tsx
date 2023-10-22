@@ -79,12 +79,14 @@ function App() {
           </h2>
           <p className="mt-2 lg:text-lg text-gray-800 dark:text-gray-200">
             Built with{" "}
-            <img
-              style={{ display: "inline-block" }}
-              alt="Tableland"
-              width="150"
-              src={tablelandLogo}
-            />
+            <a href="https://tablescan.io/guestbook_80001_8065" target="_blank">
+              <img
+                style={{ display: "inline-block" }}
+                alt="Tableland"
+                width="150"
+                src={tablelandLogo}
+              />
+            </a>
           </p>
         </div>
         <Table messages={messages} />

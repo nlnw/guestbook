@@ -12,26 +12,10 @@ import {
 } from "./common";
 import { GUESTBOOK_ABI } from "./commonAbi";
 
-export function useDebounce<T>(value: T, delay?: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay || 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-}
-
 export default function Form({ refresh }: { refresh: () => void }) {
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const [message, setMessage] = useState<string>("");
-
-  // const debouncedMessage = useDebounce(message, 1000);
 
   const { config } = usePrepareContractWrite({
     address: chain?.name.startsWith("Scroll")
