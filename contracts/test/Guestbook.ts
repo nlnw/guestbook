@@ -30,15 +30,28 @@ describe("Guestbook", function () {
         guestbook.address,
         { walletClient: otherAccount }
       );
-      const hash = await postAsOtherAccount.write.post(["Hello world!"]);
-      await publicClient.waitForTransactionReceipt({ hash });
-
+      await postAsOtherAccount.write.post(["Hello world!"]);
       expect(await guestbook.read.posts([0n])).to.eql([
         getAddress(otherAccount.account.address),
         "Hello world!",
         "0x0000000000000000000000000000000000000000",
         "",
       ]);
+
+      const postAsOwner = await hre.viem.getContractAt(
+        "Guestbook",
+        guestbook.address,
+        { walletClient: owner }
+      );
+      await postAsOwner.write.post(["Hello world again!"]);
+      expect(await guestbook.read.posts([1n])).to.eql([
+        getAddress(owner.account.address),
+        "Hello world again!",
+        "0x0000000000000000000000000000000000000000",
+        "",
+      ]);
+
+      expect(await guestbook.read.count()).to.equal(2n);
     });
   });
 });

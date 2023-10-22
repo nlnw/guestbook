@@ -32,4 +32,8 @@ contract Guestbook {
         emit Posted(posts[posts.length - 1]);
         return posts.length - 1;
     }
+
+    function count() external view returns (uint) {
+        return posts.length;
+    }
 }
