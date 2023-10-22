@@ -23,3 +23,7 @@ Multi-chain guestbook that supports peer-to-peer messages (encryption to be adde
 
 - Contract: https://explorer.testnet.mantle.xyz/address/0xf98CBd9bDc0dd1441DA3faE0E1Eb66D6F966e52d/contracts#address-tabs
 - Tweet: https://twitter.com/zknlnw/status/1715917304905523252
+
+### Filecoin
+
+- Contract: https://calibration.filfox.info/en/address/0xc4460758c1B169AD7c64f160b3Ddc7677cCD0886

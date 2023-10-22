@@ -150,6 +150,11 @@ export default function Table({ messages }: { messages: TableRowWithChain[] }) {
                                   <img src="/mantle.webp" />
                                 </a>
                               )}
+                              {message.chain == "Filecoin Calibration" && (
+                                <a href="https://filecoin.io/" target="_blank">
+                                  <img src="/filecoin.svg" />
+                                </a>
+                              )}
                             </span>
                           </div>
                         </td>

@@ -1,7 +1,12 @@
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { useEffect, useState } from "react";
-import { mantleTestnet, polygonMumbai, scrollSepolia } from "viem/chains";
+import {
+  filecoinCalibration,
+  mantleTestnet,
+  polygonMumbai,
+  scrollSepolia,
+} from "viem/chains";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
@@ -10,6 +15,7 @@ import Form from "./Form";
 import Table from "./Table";
 import tablelandLogo from "./assets/tableland.svg";
 import {
+  FILECOIN_GUESTBOOK_ADDRESS,
   MANTLE_GUESTBOOK_ADDRESS,
   SCROLL_GUESTBOOK_ADDRESS,
   TableRow,
@@ -36,6 +42,10 @@ function App() {
         MANTLE_GUESTBOOK_ADDRESS,
         mantleTestnet
       );
+      const filecoinMessages = await queryEVMTestnetMessages(
+        FILECOIN_GUESTBOOK_ADDRESS,
+        filecoinCalibration
+      );
       const tableLandMessages = (await queryTable()).map((row: TableRow) => ({
         ...row,
         chain: "tableland",
@@ -43,7 +53,7 @@ function App() {
 
       setMessages(
         scrollMessages
-          .concat(mantleMessages, tableLandMessages)
+          .concat(mantleMessages, tableLandMessages, filecoinMessages)
           .sort((a, b) => b.id - a.id)
       );
     };

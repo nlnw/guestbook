@@ -9,6 +9,7 @@ import {
   writeTableMessage,
   SCROLL_GUESTBOOK_ADDRESS,
   MANTLE_GUESTBOOK_ADDRESS,
+  FILECOIN_GUESTBOOK_ADDRESS,
 } from "./common";
 import { GUESTBOOK_ABI } from "./commonAbi";
 
@@ -22,6 +23,8 @@ export default function Form({ refresh }: { refresh: () => void }) {
       ? SCROLL_GUESTBOOK_ADDRESS
       : chain?.name.startsWith("Mantle")
       ? MANTLE_GUESTBOOK_ADDRESS
+      : chain?.name.startsWith("Filecoin")
+      ? FILECOIN_GUESTBOOK_ADDRESS
       : SCROLL_GUESTBOOK_ADDRESS,
     abi: GUESTBOOK_ABI,
     functionName: "post",
