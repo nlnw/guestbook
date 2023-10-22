@@ -1,5 +1,5 @@
 import { Database } from "@tableland/sdk";
-import { createPublicClient, getContract, http } from "viem";
+import { Chain, createPublicClient, getContract, http } from "viem";
 import { scrollSepolia } from "viem/chains";
 import { GUESTBOOK_ABI } from "./commonAbi";
 
@@ -48,12 +48,13 @@ export async function writeTableMessage(address: string, message: string) {
   await insert.txn?.wait();
 }
 
-export async function queryScrollTestnetMessages(): Promise<
-  TableRowWithChain[]
-> {
+export async function queryEVMTestnetMessages(
+  address: string,
+  chain: Chain
+): Promise<TableRowWithChain[]> {
   const publicClient = createPublicClient({
     batch: { multicall: true },
-    chain: scrollSepolia,
+    chain: chain,
     transport: http(),
   });
   const contract = getContract({
@@ -73,7 +74,7 @@ export async function queryScrollTestnetMessages(): Promise<
     ];
     posts.push({
       id: i,
-      chain: "scroll",
+      chain: chain.name,
       sender: post[0],
       message: post[1],
       encrypted_receiver:
@@ -82,16 +83,4 @@ export async function queryScrollTestnetMessages(): Promise<
     });
   }
   return posts;
-}
-
-export async function writeContractMessage(
-  address: string,
-  message: string,
-  chain: string
-) {
-  const publicClient = createPublicClient({
-    batch: { multicall: true },
-    chain: scrollSepolia,
-    transport: http(),
-  });
 }

@@ -17,6 +17,8 @@ Multi-chain guestbook that supports peer-to-peer encrypted messages. Built for E
 ### Scroll
 
 - Contract: https://sepolia.scrollscan.dev/address/0xf98cbd9bdc0dd1441da3fae0e1eb66d6f966e52d#code
-- Contract (defunc -- forgot to add a count()): https://sepolia.scrollscan.dev/address/0xac81d5cf2e49897dda8d923e4a4b85e0ab75d33e#code
+- Contract (defunct -- forgot to add a count()): https://sepolia.scrollscan.dev/address/0xac81d5cf2e49897dda8d923e4a4b85e0ab75d33e#code
 
 ### Mantle
+
+- Contract: https://explorer.testnet.mantle.xyz/address/0xf98CBd9bDc0dd1441DA3faE0E1Eb66D6F966e52d/contracts#address-tabs

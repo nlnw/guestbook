@@ -10,9 +10,11 @@ import Form from "./Form";
 import Table from "./Table";
 import tablelandLogo from "./assets/tableland.svg";
 import {
+  MANTLE_GUESTBOOK_ADDRESS,
+  SCROLL_GUESTBOOK_ADDRESS,
   TableRow,
   TableRowWithChain,
-  queryScrollTestnetMessages,
+  queryEVMTestnetMessages,
   queryTable,
 } from "./common";
 
@@ -26,14 +28,23 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const scrollMessages = await queryScrollTestnetMessages();
+      const scrollMessages = await queryEVMTestnetMessages(
+        SCROLL_GUESTBOOK_ADDRESS,
+        scrollSepolia
+      );
+      const mantleMessages = await queryEVMTestnetMessages(
+        MANTLE_GUESTBOOK_ADDRESS,
+        mantleTestnet
+      );
       const tableLandMessages = (await queryTable()).map((row: TableRow) => ({
         ...row,
         chain: "tableland",
       }));
 
       setMessages(
-        scrollMessages.concat(tableLandMessages).sort((a, b) => b.id - a.id)
+        scrollMessages
+          .concat(mantleMessages, tableLandMessages)
+          .sort((a, b) => b.id - a.id)
       );
     };
     fetchData().catch(console.error);

@@ -137,9 +137,17 @@ export default function Table({ messages }: { messages: TableRowWithChain[] }) {
                                   <img src="/tableland_ico.png" />
                                 </a>
                               )}
-                              {message.chain == "scroll" && (
+                              {message.chain == "Scroll Sepolia" && (
                                 <a href="https://scroll.io/" target="_blank">
                                   <img src="/scroll.ico" />
+                                </a>
+                              )}
+                              {message.chain == "Mantle Testnet" && (
+                                <a
+                                  href="https://www.mantle.xyz/"
+                                  target="_blank"
+                                >
+                                  <img src="/mantle.webp" />
                                 </a>
                               )}
                             </span>
