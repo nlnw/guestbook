@@ -1,6 +1,6 @@
 # Guestbook
 
-Multi-chain guestbook that supports peer-to-peer encrypted messages. Built for ETHOnline 2023.
+Multi-chain guestbook that supports peer-to-peer messages (encryption to be added later). Built for ETHOnline 2023.
 
 ## Bounties
 
